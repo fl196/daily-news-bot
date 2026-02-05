@@ -1,0 +1,15 @@
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  sender_email: "fpublic4@gmail.com"
+  sender_password: "nhmkcaewrrviaukp"
+  recipient_email: "fmalspaoa@gmail.com"
+
+news:
+  api_key: "b1c60a38bf754b12ab3b18b0c73236cc"
+  country: "in"
+  articles_per_category: 4
+
+scheduler:
+  time: "07:00"
+  
