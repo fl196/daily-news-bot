@@ -9,27 +9,7 @@ from email.utils import formataddr
 import smtplib
 import yaml
 
-# Load config from environment variables (for cloud) or config.yaml (local)
 def load_config():
-    if os.environ.get('EMAIL_SENDER'):
-        return {
-            'email': {
-                'smtp_server': 'smtp.gmail.com',
-                'smtp_port': 587,
-                'sender_email': os.environ.get('EMAIL_SENDER'),
-                'sender_password': os.environ.get('EMAIL_PASSWORD'),
-                'recipient_email': os.environ.get('EMAIL_RECIPIENT')
-            },
-            'news': {
-                'api_key': os.environ.get('NEWS_API_KEY'),
-                'categories': ['technology', 'business', 'science', 'health', 'national', 'international', 'education', 'environment'],
-                'country': 'in',
-                'articles_per_category': 4
-            },
-            'scheduler': {
-                'time': os.environ.get('SCHEDULER_TIME', '07:00')
-            }
-        }
     with open('config.yaml', 'r') as f:
         return yaml.safe_load(f)
 
@@ -81,9 +61,9 @@ class NewsSummarizer:
 class EmailSender:
     def __init__(self, config, logger):
         self.logger = logger
-        self.smtp_server, self.smtp_port = config['smtp_server'], config['smtp_port']
-        self.sender_email, self.sender_password = config['sender_email'], config['sender_password']
-        self.recipient_email = config['recipient_email']
+        self.smtp_server, self.smtp_port = config['email']['smtp_server'], config['email']['smtp_port']
+        self.sender_email, self.sender_password = config['email']['sender_email'], config['email']['sender_password']
+        self.recipient_email = config['email']['recipient_email']
     
     def create_email(self, news_data, date_str):
         html = f"""<!DOCTYPE html>
@@ -232,4 +212,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-          
+    
